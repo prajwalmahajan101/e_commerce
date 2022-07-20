@@ -1,0 +1,1 @@
+const API_ROOT = "https://my-json-server.typicode.com/prajwalmahajan101/Ecom_db/";
