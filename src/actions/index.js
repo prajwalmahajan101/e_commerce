@@ -27,3 +27,39 @@ export const deleteProductAction = (id) =>{
         product_id:id
     }
 }
+
+
+export const Add_To_Cart = "Add_to_Cart";
+
+export const addToCartAction = (id) =>{
+    return {
+        type:Add_To_Cart,
+        product_id:id
+    }
+}
+
+
+export const Remove_From_Cart = "Remove_From_Cart";
+
+export const removeFromCartAction = (id) =>{
+    return {
+        type:Remove_From_Cart,
+        product_id:id
+    }
+}
+
+export const Qty_Increase = "Increase_Qty"
+export const increaseQtyAction = (id) =>{
+    return {
+        type:Qty_Increase,
+        product_id:id
+    }
+}
+
+export const Qty_Decrease = "Decrease_Qty"
+export const decreaseQtyAction = (id) =>{
+    return {
+        type:Qty_Decrease,
+        product_id:id
+    }
+}

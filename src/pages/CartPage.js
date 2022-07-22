@@ -1,5 +1,6 @@
 import React from "react";
-import CartItem from "../Components/ProductItem";
+import CartItem from"../Components/CartItem"
+
 
 class CartPage extends React.Component{
 
@@ -8,7 +9,7 @@ class CartPage extends React.Component{
         const {cart} = store.getState();
         return(
             <div className="cart">
-                {cart.map((product)=><CartItem key={product.id} product={product}/>)}
+                {cart.items.map((product)=><CartItem key={product.id} product={product} store={store}/>)}
             </div>
         )
     }

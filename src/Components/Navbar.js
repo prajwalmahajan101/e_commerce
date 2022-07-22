@@ -30,7 +30,9 @@ const StyledLink = styled(Link)`
 `;
 
 // React Function
-const Navbar = () => {
+const Navbar = (props) => {
+    const {store} = props;
+    const {cart} = store.getState();
     return (
         <StyledNav>
             <StyledList>
@@ -44,11 +46,33 @@ const Navbar = () => {
                 </li>
                 <li>
                     {/* Link to the Cart Page */}
-                    <StyledLink to="/cart">Cart</StyledLink>
+                    <StyledLink to="/cart">
+                        <div style={styles.cartIconContainer}>
+                            Cart
+                            <span style={styles.cartCount}>{cart.total}</span>
+                        </div>
+                    </StyledLink>
                 </li>
             </StyledList>
         </StyledNav>
     );
 };
+
+
+const styles = {
+    cartIconContainer: {
+        position: 'relative'
+    },
+    cartCount: {
+        background: 'blue',
+        borderRadius: '50%',
+        padding: '4px 6px',
+        position: 'absolute',
+        fontSize:10,
+        right: -20,
+        top: -5
+    }
+
+}
 
 export default Navbar;

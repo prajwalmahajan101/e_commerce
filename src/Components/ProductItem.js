@@ -1,8 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from "react-router-dom"
 import styled from "styled-components";
-import {deleteProductAction} from "../actions";
 
+import {
+    deleteProductAction,
+    addToCartAction,
+    removeFromCartAction
+} from "../actions";
+import { toast } from 'react-toastify';
 const DetailedImageContainer = styled.div`
 min-width:100%;
   
@@ -79,14 +84,27 @@ const ActionIcons =styled.img`
   }
 
 `
-
-
 const ProductItem = (props) =>{
-    const {id,name, description, price ,rating,img} = props.product;
+    const [productPresent,setProductPresent] = useState(true);
+    let {id,name, description, price ,rating,img,inCart} = props.product;
     const store = props.store;
+    const [update,setUpdate] = useState(inCart);
     const deleteHandler = (e) =>{
         const id =e.target.id;
-        store.dispatch(deleteProductAction(id))
+        store.dispatch(deleteProductAction(id));
+        setProductPresent(false);
+    }
+    const cartAddHandler = (e) =>{
+        const id = e.target.id;
+
+        store.dispatch(addToCartAction(id));
+        setUpdate((prev)=>!prev);
+    }
+    const cartRemoveHandler = (e) =>{
+        const id = e.target.id;
+
+        store.dispatch(removeFromCartAction(id));
+        setUpdate((prev)=>!prev);
     }
     const {isDetailed} = props;
     return(
@@ -105,12 +123,34 @@ const ProductItem = (props) =>{
             {!isDetailed?
                 <CartItemActions>
                     <ActionIcons alt={"edit"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/420/420140.png"} />
-                    <ActionIcons alt={"add_to_cart"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/891/891462.png"} />
+                    {!inCart&&<ActionIcons
+                        alt={"add_to_cart"}
+                        id={id}
+                        onClick={cartAddHandler}
+                        src={"https://cdn-icons-png.flaticon.com/512/891/891462.png"}
+                    />}
+                    {inCart&&<ActionIcons
+                        alt={"remove_from_cart"}
+                        id={id}
+                        onClick={cartRemoveHandler}
+                        src={"https://cdn-icons-png.flaticon.com/512/4379/4379934.png"}
+                    />}
                     <ActionIcons alt={"delete"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/7205/7205658.png"} />
                 </CartItemActions>
                 :<DetailedCartItemActions>
                     <ActionIcons alt={"edit"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/420/420140.png"} />
-                    <ActionIcons alt={"add_to_cart"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/891/891462.png"} />
+                    {!update&&<ActionIcons
+                        alt={"add_to_cart"}
+                        id={id}
+                        onClick={cartAddHandler}
+                        src={"https://cdn-icons-png.flaticon.com/512/891/891462.png"}
+                    />}
+                    {update&&<ActionIcons
+                        alt={"remove_from_cart"}
+                        id={id}
+                        onClick={cartRemoveHandler}
+                        src={"https://cdn-icons-png.flaticon.com/512/4379/4379934.png"}
+                    />}
                     <ActionIcons alt={"delete"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/7205/7205658.png"} />
                 </DetailedCartItemActions>
             }

@@ -63,6 +63,7 @@ const CreateProductPage = (props) => {
     const rating = useFormData("");
     const img = useFormData("");
     const store = props.store;
+    const unSortButtonHanlder = props.unSortButtonHandler;
     // navigate function
     const navigate = useNavigate();
     // submit Handler function
@@ -82,6 +83,7 @@ const CreateProductPage = (props) => {
         // console.log(response)
         console.log(store.getState())
         // Redirecting
+        unSortButtonHanlder();
         navigate("/")
     };
 
