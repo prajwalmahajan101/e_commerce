@@ -10,6 +10,7 @@ import CartPage from "../pages/CartPage"
 import {ToastContainer} from "react-toastify";
 import _ from "lodash";
 import UpdateProductPage from "../pages/UpdateProductPage";
+import {saveState} from '../store/localStorage';
 class App extends React.Component{
     constructor() {
         super();
@@ -19,11 +20,16 @@ class App extends React.Component{
     }
      componentDidMount= async () => {
          const {store} = this.props;
-         const response = await getProducts();
+
          store.subscribe(()=>{
+             const data =  store.getState();
+             saveState(data)
              this.forceUpdate();
          })
-         store.dispatch(addProductAction(response.data))
+         if(store.getState().products.length===0) {
+             const response = await getProducts();
+             store.dispatch(addProductAction(response.data))
+         }
      }
 
     render() {
