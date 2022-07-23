@@ -63,3 +63,13 @@ export const decreaseQtyAction = (id) =>{
         product_id:id
     }
 }
+
+
+export const Update_Product = "Update_Product"
+
+export const updateProductAction = (data) =>{
+    return {
+        type:Update_Product,
+        product:data
+    }
+}

@@ -9,6 +9,7 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import CartPage from "../pages/CartPage"
 import {ToastContainer} from "react-toastify";
 import _ from "lodash";
+import UpdateProductPage from "../pages/UpdateProductPage";
 class App extends React.Component{
     constructor() {
         super();
@@ -64,7 +65,7 @@ class App extends React.Component{
                         path="/create-product"
                         element={<CreateProductPage store={store}  unSortButtonHandler = {unSortProductsHandler}/>}
                     ></Route>
-
+                    <Route extact path="/update/:productId" element={<UpdateProductPage store={store} />}></Route>
                     <Route extact path="/product/:productId" element={<ProductDetailPage store={store} />}></Route>
                     <Route extact path="/cart" element={<CartPage store={store} />}></Route>
                 </Routes>

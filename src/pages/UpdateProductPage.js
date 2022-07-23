@@ -3,10 +3,9 @@ import { useFormData } from "../utils";
 // Styled function From the Styled Component Library
 import styled from "styled-components";
 // use Navigate Function format React Router Dom to redirect After submit of Form
-import { useNavigate } from "react-router-dom";
-// Create Album  Function From the API
-import {createProduct} from "../apis";
-import {createProductAction} from "../actions";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {useEffect} from "react";
+import {updateProductAction} from "../actions";
 // Styled Components
 const StyledForm = styled.div`
   width: 80%;
@@ -54,36 +53,64 @@ const FromControls = styled.div`
   flex-direction: row-reverse;
 `;
 
+const StyledHeading = styled.h1`
+  margin:40px auto;
+  text-align:center;
+`
+
+
 // React function
-const CreateProductPage = (props) => {
-    // title State
-    const [name,] = useFormData("");
-    const [description,] = useFormData("");
-    const [price,] = useFormData("");
-    const [rating,] = useFormData("");
-    const [img,] = useFormData("");
-    const store = props.store;
-    const unSortButtonHanlder = props.unSortButtonHandler;
+const UpdateProductPage = (props) => {
+    const { productId } =  useParams();
     // navigate function
     const navigate = useNavigate();
+    const [name,setName] = useFormData("");
+    const [description,setDescription] = useFormData("");
+    const [rating,setRating] = useFormData("");
+    const [price,setPrice] = useFormData("");
+    const [img,setImg] = useFormData("");
+
+    const store = props.store;
+    useEffect(()=>{
+        const {products} = store.getState();
+        let product = products.filter((el)=>el.id===productId);
+        if(product.length===0){
+            return <StyledHeading>Go Back to <Link to={"/"}>Home</Link></StyledHeading>
+        }
+        else{
+            product=product[0];
+        }
+        setName(product.name);
+        setDescription(product.description);
+        setPrice(product.price);
+        setRating(product.rating);
+        setImg(product.img);
+    },[productId, setDescription, setImg, setName, setPrice, setRating, store]);
+
     // submit Handler function
     const submitHandler = async (e) => {
         // Prevent to Submit for the normal way
         e.preventDefault();
         // call for the creation Product
-        const response = await createProduct({
+        // const response = await createProduct({
+        //     name:name.value,
+        //     description:description.value,
+        //     price:price.value,
+        //     rating:rating.value,
+        //     img:img.value
+        // })
+        // store.dispatch(updateProductAction(data))
+        // console.log(store.getState())
+
+        const data= {
+            id:productId,
             name:name.value,
             description:description.value,
             price:price.value,
             rating:rating.value,
             img:img.value
-        })
-        store.dispatch(createProductAction(response.data))
-        // Logging the Response
-        // console.log(response)
-        console.log(store.getState())
-        // Redirecting
-        unSortButtonHanlder();
+        }
+        store.dispatch(updateProductAction(data))
         navigate("/")
     };
 
@@ -100,17 +127,17 @@ const CreateProductPage = (props) => {
                         <input {...description} required />
                     </StyledFormField>
                     <StyledFormField >
-                    <label>Price</label>
+                        <label>Price</label>
                         <input type={'number'} step={1} {...price} min={0} required /></StyledFormField>
                     <StyledFormField >
-                    <label>Rating</label>
+                        <label>Rating</label>
                         <input {...rating} type={'number'} step={0.1} min={0.0} max={5.0} required /></StyledFormField>
                     <StyledFormField >
-                    <label>Image URL</label>
-                    <input {...img} type={'url'} required />
+                        <label>Image URL</label>
+                        <input {...img} type={'url'} required />
                     </StyledFormField>
-                        <FromControls>
-                        <StyledButton>Create</StyledButton>
+                    <FromControls>
+                        <StyledButton>Update</StyledButton>
                     </FromControls>
                 </StyledForm>
             </form>
@@ -118,4 +145,4 @@ const CreateProductPage = (props) => {
     );
 };
 
-export default CreateProductPage;
+export default UpdateProductPage;

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import styled from "styled-components";
 
 import {
@@ -7,7 +7,6 @@ import {
     addToCartAction,
     removeFromCartAction
 } from "../actions";
-import { toast } from 'react-toastify';
 const DetailedImageContainer = styled.div`
 min-width:100%;
   
@@ -85,7 +84,8 @@ const ActionIcons =styled.img`
 
 `
 const ProductItem = (props) =>{
-    const [productPresent,setProductPresent] = useState(true);
+    const [,setProductPresent] = useState(true);
+    const navigate = useNavigate();
     let {id,name, description, price ,rating,img,inCart} = props.product;
     const store = props.store;
     const [update,setUpdate] = useState(inCart);
@@ -106,6 +106,10 @@ const ProductItem = (props) =>{
         store.dispatch(removeFromCartAction(id));
         setUpdate((prev)=>!prev);
     }
+    const editHandler = (e) =>{
+        const id = e.target.id;
+        navigate(`update/${id}`);
+    }
     const {isDetailed} = props;
     return(
         <CartItem>
@@ -122,7 +126,7 @@ const ProductItem = (props) =>{
             </RightBlock>
             {!isDetailed?
                 <CartItemActions>
-                    <ActionIcons alt={"edit"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/420/420140.png"} />
+                    <ActionIcons alt={"edit"} id={id} onClick={editHandler} src={"https://cdn-icons-png.flaticon.com/512/420/420140.png"} />
                     {!inCart&&<ActionIcons
                         alt={"add_to_cart"}
                         id={id}
@@ -138,7 +142,7 @@ const ProductItem = (props) =>{
                     <ActionIcons alt={"delete"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/7205/7205658.png"} />
                 </CartItemActions>
                 :<DetailedCartItemActions>
-                    <ActionIcons alt={"edit"} id={id} onClick={deleteHandler} src={"https://cdn-icons-png.flaticon.com/512/420/420140.png"} />
+                    <ActionIcons alt={"edit"} id={id} onClick={editHandler} src={"https://cdn-icons-png.flaticon.com/512/420/420140.png"} />
                     {!update&&<ActionIcons
                         alt={"add_to_cart"}
                         id={id}

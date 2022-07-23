@@ -14,8 +14,8 @@ export const useFormData = (initialValue) => {
     const handleChange = (e) => {
         setValue(e.target.value);
     };
-    return{
+    return[{
             value,
             onChange: handleChange,
-    }
+    },setValue]
 };

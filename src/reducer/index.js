@@ -6,6 +6,7 @@ import {
     Remove_From_Cart,
     Qty_Increase,
     Qty_Decrease,
+    Update_Product,
 } from '../actions'
 import { toast } from 'react-toastify';
 
@@ -92,6 +93,18 @@ export default function products (state =initialState, action){
             return el;
         })
         if(!flag) toast("Quantity is Already Minimum Please Remove the Product")
+        return state;
+    }
+
+    if(action.type===Update_Product){
+        state.products = state.products.map((el)=>{
+            if(el.id===action.product.id) return action.product;
+            return el;
+        })
+        state.cart.items = state.cart.items.map((el)=>{
+            if(el.id===action.product.id) el = {...el,...action.product}
+            return el;
+        })
         return state;
     }
 

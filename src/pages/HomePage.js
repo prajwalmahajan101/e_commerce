@@ -22,7 +22,12 @@ const StyledButton = styled.button`
 const Home = props => {
     let { store,products,cart,sortButtonHandler,sort,unSortButtonHandler} = props;
     let productList = products.map((el)=>{
-        el.inCart = cart.items.indexOf(el) !== -1;
+        let flag = false;
+        cart.items.map((el1)=>{
+            if(el1.id===el.id) flag = true;
+            return el1;
+        })
+        el.inCart = flag;
         return el;
     })
     const sortHandler = () =>{
