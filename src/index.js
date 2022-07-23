@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { legacy_createStore as createStore} from 'redux';
+
 // Router For App to use React Router Dom Library
 import { BrowserRouter as Router } from "react-router-dom";
 
 import './styles/index.css';
 import App from './Components/App';
-import products from './reducer';
+
 import 'react-toastify/dist/ReactToastify.css';
-const store = createStore(products);
+import store from "./store"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

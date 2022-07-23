@@ -106,11 +106,13 @@ const ProductItem = (props) =>{
         store.dispatch(removeFromCartAction(id));
         setUpdate((prev)=>!prev);
     }
+    const {isDetailed} = props;
     const editHandler = (e) =>{
         const id = e.target.id;
-        navigate(`update/${id}`);
+        if(isDetailed) navigate(`../../update/${id}`);
+        else  navigate(`../../update/${id}`);
     }
-    const {isDetailed} = props;
+
     return(
         <CartItem>
             {isDetailed&&<DetailedImageContainer><DetailedPageImage alt={name} src={img} /></DetailedImageContainer>}
