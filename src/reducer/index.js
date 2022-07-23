@@ -105,6 +105,7 @@ export default function products (state =initialState, action){
             if(el.id===action.product.id) el = {...el,...action.product}
             return el;
         })
+        toast("Product Updated")
         return state;
     }
 
