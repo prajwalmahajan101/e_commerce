@@ -32,14 +32,19 @@ export default function products (state =initialState, action){
         return state;
     }
     if(action.type===Delete_Product){
-        const products = state.products.filter((el)=>{
+        state.products= state.products.filter((el)=>{
             return el.id!==action.product_id;
         });
+        let total=0;
+        state.cart.items = state.cart.items.filter((el)=>{
+            if(el.id!==action.product_id){
+                total+=el.qty;
+            }
+            return el.id!==action.product_id;
+        })
+        state.cart.total = total;
         toast("Product Deleted!!!!");
-        return{
-            ...state,
-            products
-        }
+        return state;
     }
     if(action.type===Add_To_Cart){
         const product = state.products.filter((el)=>{

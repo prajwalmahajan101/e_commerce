@@ -33,7 +33,6 @@ const Home = props => {
         unSortButtonHandler();
         toast("Filter Removed")
     }
-    console.log(productList);
     return (
         <StyledOutterDiv>
             {!sort&&<StyledButton onClick={sortHandler}>Sort By Price</StyledButton>}
