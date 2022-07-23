@@ -2,9 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import {removeFromCartAction,decreaseQtyAction,increaseQtyAction} from "../actions";
 import {Link} from "react-router-dom";
-import { toast } from 'react-toastify';
-
-
 const ProductImageContainer = styled.div`
   max-width: 20%;
   width:110px;
@@ -71,7 +68,6 @@ const ProductItem = (props) =>{
     const removeHandler = (e) =>{
         const id = e.target.id;
         store.dispatch(removeFromCartAction(id));
-        toast("Product Removed Form Cart !!!!")
     }
     const increaseHandler = (e) =>{
         const id = e.target.id;

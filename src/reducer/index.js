@@ -18,17 +18,28 @@ const initialState = {
         total:0
     }
 }
+const toastSuccess = (data) =>{
+    toast.success(data, {
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+    });
+}
 
 export default function products (state =initialState, action){
     if(action.type===Add_Products) {
-        toast("Product Loaded!!!!");
+        toastSuccess("Product Loaded!!!!")
         return {
             ...state,
             products: action.products
         }
     }
     if(action.type===Create_Product){
-        toast("Product Created!!!!");
+        toastSuccess("Product Created!!!!");
         state.products.push(action.product);
         return state;
     }
@@ -44,7 +55,7 @@ export default function products (state =initialState, action){
             return el.id!==action.product_id;
         })
         state.cart.total = total;
-        toast("Product Deleted!!!!");
+        toastSuccess("Product Deleted!!!!");
         return state;
     }
     if(action.type===Add_To_Cart){
@@ -54,7 +65,7 @@ export default function products (state =initialState, action){
         product.qty = 1;
         state.cart.items.push(product);
         state.cart.total++;
-        toast("Product Added to Cart!!!!");
+        toastSuccess("Product Added to Cart!!!!");
         return state;
     }
     if(action.type===Remove_From_Cart){
@@ -64,7 +75,7 @@ export default function products (state =initialState, action){
             return el.id!==action.product_id;
         });
         const cart = {items,total};
-        toast("Product Removed From Cart!!!!");
+        toastSuccess("Product Removed From Cart!!!!");
         return{
             ...state,
             cart
@@ -75,7 +86,7 @@ export default function products (state =initialState, action){
             if(el.id===action.product_id) {
                 el.qty++;
                 state.cart.total++;
-                toast("Quantity Of Product Increased !!!!")
+                toastSuccess("Quantity Of Product Increased !!!!")
             }
             return el;
         })
@@ -88,11 +99,19 @@ export default function products (state =initialState, action){
                 flag = true;
                 el.qty--;
                 state.cart.total--;
-                toast("Quantity Of Product Decreased !!!!")
+                toastSuccess("Quantity Of Product Decreased !!!!")
             }
             return el;
         })
-        if(!flag) toast("Quantity is Already Minimum Please Remove the Product")
+        if(!flag) toast.error("Quantity is Already Minimum Please Remove the Product",{
+            position: "top-left",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        })
         return state;
     }
 
@@ -105,7 +124,7 @@ export default function products (state =initialState, action){
             if(el.id===action.product.id) el = {...el,...action.product}
             return el;
         })
-        toast("Product Updated")
+        toastSuccess("Product Updated")
         return state;
     }
 

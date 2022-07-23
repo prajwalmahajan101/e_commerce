@@ -11,6 +11,7 @@ import {ToastContainer} from "react-toastify";
 import _ from "lodash";
 import UpdateProductPage from "../pages/UpdateProductPage";
 import {saveState} from '../store/localStorage';
+import 'react-toastify/dist/ReactToastify.css';
 class App extends React.Component{
     constructor() {
         super();
@@ -52,7 +53,18 @@ class App extends React.Component{
         return (
             <>
                 <Navbar store={store} />
-                <ToastContainer />
+                <ToastContainer
+                    position="top-left"
+                    autoClose={1000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    theme={"dark"}
+                    pauseOnHover={false}
+                />
                 <Routes>
                     <Route
                         extact

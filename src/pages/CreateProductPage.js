@@ -79,10 +79,6 @@ const CreateProductPage = (props) => {
             img:img.value
         })
         store.dispatch(createProductAction(response.data))
-        // Logging the Response
-        // console.log(response)
-        console.log(store.getState())
-        // Redirecting
         unSortButtonHanlder();
         navigate("/")
     };
